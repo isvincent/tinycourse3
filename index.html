@@ -1,0 +1,603 @@
+<title>高一微課程課表通</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+:root{
+  --bg:#eef1fb;
+  --bg2:#e4e8f7;
+  --surface:#ffffff;
+  --surface-2:#f6f8ff;
+  --ink:#1c2136;
+  --muted:#5c6580;
+  --line:#dde2f0;
+  --accent:#ff5c39;
+  --accent-ink:#c7381a;
+  --shadow:0 10px 30px -14px rgba(31,40,80,.35);
+  --shadow-soft:0 3px 12px -6px rgba(31,40,80,.25);
+  /* 教師色票 */
+  --t-shi:#f4a324;   /* 施文賢 */
+  --t-jiang:#ec4899; /* 江明慧 */
+  --t-yeh:#12b981;   /* 葉叢瑜 */
+  --t-yang:#8b5cf6;  /* 楊瑞雲 */
+  --t-laiy:#3b82f6;  /* 賴奕成 */
+  --t-ho:#06b6d4;    /* 何友友 */
+  --t-chen:#ef4444;  /* 陳佩萱 */
+  --t-laij:#77b31a;  /* 賴俊帆 */
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#0f1324;
+    --bg2:#141a30;
+    --surface:#1a2038;
+    --surface-2:#222a46;
+    --ink:#eef1fc;
+    --muted:#9aa4c4;
+    --line:#2c355a;
+    --accent:#ff6f4f;
+    --accent-ink:#ffb9a6;
+    --shadow:0 14px 34px -16px rgba(0,0,0,.7);
+    --shadow-soft:0 4px 14px -8px rgba(0,0,0,.6);
+    --t-shi:#f7b13f;
+    --t-jiang:#f472b6;
+    --t-yeh:#2dd4a6;
+    --t-yang:#a78bfa;
+    --t-laiy:#60a5fa;
+    --t-ho:#34d3ec;
+    --t-chen:#f87171;
+    --t-laij:#a3d13a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1324;
+  --bg2:#141a30;
+  --surface:#1a2038;
+  --surface-2:#222a46;
+  --ink:#eef1fc;
+  --muted:#9aa4c4;
+  --line:#2c355a;
+  --accent:#ff6f4f;
+  --accent-ink:#ffb9a6;
+  --shadow:0 14px 34px -16px rgba(0,0,0,.7);
+  --shadow-soft:0 4px 14px -8px rgba(0,0,0,.6);
+  --t-shi:#f7b13f;
+  --t-jiang:#f472b6;
+  --t-yeh:#2dd4a6;
+  --t-yang:#a78bfa;
+  --t-laiy:#60a5fa;
+  --t-ho:#34d3ec;
+  --t-chen:#f87171;
+  --t-laij:#a3d13a;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Fredoka",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  background:
+    radial-gradient(1200px 600px at 12% -8%, color-mix(in oklab, var(--accent) 12%, var(--bg)) 0%, transparent 60%),
+    radial-gradient(1000px 520px at 105% 4%, color-mix(in oklab, var(--t-laiy) 14%, var(--bg)) 0%, transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+.num{font-family:"Fredoka","Noto Sans TC",sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 90px}
+
+/* ---------- Header ---------- */
+header.app{
+  position:relative;
+  background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 90%, #ff8a3c), var(--t-jiang));
+  border-radius:24px;
+  padding:26px 26px 24px;
+  color:#fff;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+header.app::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(420px 200px at 90% 0%, rgba(255,255,255,.28), transparent 60%),
+    radial-gradient(320px 160px at 8% 120%, rgba(255,255,255,.18), transparent 60%);
+}
+.brand-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+.logo{
+  width:56px;height:56px;flex:0 0 auto;border-radius:16px;
+  background:rgba(255,255,255,.22);backdrop-filter:blur(4px);
+  display:grid;place-items:center;font-size:30px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
+h1{margin:0;font-size:1.85rem;font-weight:900;letter-spacing:.5px;text-wrap:balance;line-height:1.2}
+.sub{margin:3px 0 0;font-size:1rem;font-weight:500;opacity:.95}
+.spacer{flex:1 1 auto}
+.theme-btn{
+  border:0;cursor:pointer;color:#fff;font-family:inherit;font-size:.95rem;font-weight:700;
+  background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.45);
+  padding:9px 14px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;transition:.18s}
+.theme-btn:hover{background:rgba(255,255,255,.32)}
+.theme-btn:active{transform:scale(.95)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;position:relative;z-index:1}
+.stat{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);border-radius:16px;padding:12px 14px}
+.stat b{display:block;font-family:"Fredoka",sans-serif;font-size:1.75rem;font-weight:700;line-height:1}
+.stat span{font-size:.9rem;font-weight:600;opacity:.95}
+
+/* ---------- Upcoming ---------- */
+.section-title{display:flex;align-items:center;gap:9px;margin:30px 2px 14px;font-size:1.25rem;font-weight:900}
+.section-title .ic{font-size:1.3rem}
+.section-title small{font-weight:600;font-size:.9rem;color:var(--muted);margin-left:2px}
+
+.upcoming{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}
+.up-card{
+  background:var(--surface);border-radius:18px;padding:15px 16px;box-shadow:var(--shadow-soft);
+  border:1px solid var(--line);border-left:7px solid var(--tc);position:relative;overflow:hidden}
+.up-card .when{display:flex;align-items:baseline;gap:8px}
+.up-card .dd{font-family:"Fredoka",sans-serif;font-size:1.7rem;font-weight:700;color:var(--tc);line-height:1}
+.up-card .wk{font-size:.95rem;font-weight:700;color:var(--muted)}
+.up-card .cd{margin-top:9px;font-size:1.05rem;font-weight:700}
+.up-card .tt{display:inline-flex;align-items:center;gap:7px;margin-top:8px;font-size:1rem;font-weight:700;
+  padding:4px 11px;border-radius:999px;color:color-mix(in oklab,var(--tc) 78%,var(--ink));
+  background:color-mix(in oklab,var(--tc) 20%,var(--surface))}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--tc);flex:0 0 auto;box-shadow:0 0 0 3px color-mix(in oklab,var(--tc) 25%,transparent)}
+.up-card .cd-badge{position:absolute;top:12px;right:12px;font-size:.72rem;font-weight:700;color:var(--muted);
+  background:var(--surface-2);border:1px solid var(--line);padding:2px 8px;border-radius:999px}
+.days-away{font-size:.8rem;font-weight:700;color:var(--accent-ink);margin-top:2px}
+
+/* ---------- Controls ---------- */
+.panel{
+  position:sticky;top:8px;z-index:30;margin-top:10px;
+  background:color-mix(in oklab,var(--surface) 88%, transparent);
+  backdrop-filter:blur(10px) saturate(1.2);
+  border:1px solid var(--line);border-radius:20px;padding:15px 15px 13px;box-shadow:var(--shadow-soft)}
+.searchbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{flex:1 1 240px;display:flex;align-items:center;gap:9px;background:var(--surface-2);
+  border:2px solid var(--line);border-radius:14px;padding:10px 14px;transition:.18s}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--accent) 22%,transparent)}
+.search input{border:0;background:transparent;outline:0;flex:1;font-family:inherit;font-size:1.05rem;color:var(--ink);min-width:60px}
+.search input::placeholder{color:var(--muted)}
+.search .mag{font-size:1.15rem}
+.clearx{border:0;background:var(--line);color:var(--ink);width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:1rem;line-height:1;display:none}
+.clearx.show{display:block}
+
+.sound-btn{border:2px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;
+  font-family:inherit;font-size:.95rem;font-weight:700;padding:9px 13px;border-radius:14px;display:inline-flex;gap:7px;align-items:center;transition:.18s}
+.sound-btn:hover{border-color:var(--accent)}
+.sound-btn:active{transform:scale(.95)}
+
+.filters{margin-top:13px;display:flex;flex-direction:column;gap:11px}
+.filt-row{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.filt-label{flex:0 0 auto;min-width:62px;font-size:.9rem;font-weight:700;color:var(--muted);padding-top:7px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.chip{
+  border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;
+  font-family:inherit;font-size:.98rem;font-weight:700;padding:7px 13px;border-radius:999px;transition:.15s;
+  display:inline-flex;align-items:center;gap:7px;user-select:none}
+.chip:hover{transform:translateY(-1px);box-shadow:var(--shadow-soft)}
+.chip:active{transform:scale(.94)}
+.chip .cdot{width:12px;height:12px;border-radius:50%;background:var(--tc)}
+.chip.on{color:#fff;border-color:transparent;background:var(--tc, var(--accent));box-shadow:var(--shadow-soft)}
+.chip.on .cdot{background:#fff}
+.chip.plain.on{background:var(--accent)}
+
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:20px 2px 12px}
+.groupby{display:flex;gap:6px;background:var(--surface-2);border:1px solid var(--line);padding:5px;border-radius:14px}
+.gbtn{border:0;background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:700;
+  padding:8px 15px;border-radius:10px;transition:.15s}
+.gbtn.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-soft)}
+.countpill{font-size:.95rem;font-weight:700;color:var(--muted)}
+.countpill b{color:var(--accent-ink);font-family:"Fredoka",sans-serif;font-size:1.15rem}
+
+/* ---------- Groups & cards ---------- */
+.group{margin-bottom:26px;animation:fade .35s ease both}
+.grp-head{display:flex;align-items:center;gap:11px;margin:0 2px 12px;padding-bottom:9px;border-bottom:2px dashed var(--line)}
+.grp-head .gh-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:1rem;font-weight:900;color:#fff;background:var(--tc,var(--accent));flex:0 0 auto}
+.grp-head h3{margin:0;font-size:1.22rem;font-weight:900}
+.grp-head .gh-meta{font-size:.9rem;color:var(--muted);font-weight:600}
+.grp-head .gh-count{margin-left:auto;font-size:.9rem;font-weight:700;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:3px 11px;border-radius:999px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-left:7px solid var(--tc);border-radius:16px;
+  padding:13px 14px;box-shadow:var(--shadow-soft);cursor:default;transition:.16s;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.card .row1{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.card .date{font-family:"Fredoka",sans-serif;font-size:1.32rem;font-weight:700;color:var(--tc);line-height:1.05}
+.card .wk{font-size:.86rem;font-weight:700;color:var(--muted)}
+.card .cls{margin-top:8px;font-size:1.06rem;font-weight:700}
+.card .per{font-size:.84rem;color:var(--muted);font-weight:600;margin-top:1px}
+.card .tch{display:inline-flex;align-items:center;gap:7px;margin-top:9px;font-size:1.02rem;font-weight:700;
+  padding:5px 12px;border-radius:999px;cursor:pointer;border:0;font-family:inherit;transition:.15s;
+  color:color-mix(in oklab,var(--tc) 80%,var(--ink));background:color-mix(in oklab,var(--tc) 18%,var(--surface))}
+.card .tch:hover{background:color-mix(in oklab,var(--tc) 30%,var(--surface))}
+.card.today{outline:3px solid var(--accent);outline-offset:1px}
+.card .todaytag{position:absolute;top:-9px;right:10px;font-size:.72rem;font-weight:900;color:#fff;background:var(--accent);padding:2px 9px;border-radius:999px;box-shadow:var(--shadow-soft)}
+
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty .big{font-size:3rem;margin-bottom:8px}
+.empty h3{margin:0 0 6px;color:var(--ink);font-size:1.3rem}
+.empty button{margin-top:16px;border:0;background:var(--accent);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;padding:11px 20px;border-radius:12px;cursor:pointer}
+
+footer{margin-top:34px;text-align:center;color:var(--muted);font-size:.9rem;line-height:1.8}
+
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
+.pop{animation:pop .22s ease}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:14px 12px 80px}
+  header.app{padding:20px 18px;border-radius:20px}
+  h1{font-size:1.5rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filt-label{min-width:100%;padding-top:0}
+  .panel{border-radius:16px}
+  .toolbar{gap:8px}
+  .groupby{width:100%}
+  .gbtn{flex:1;padding:8px 6px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="wrap">
+  <header class="app">
+    <div class="brand-row">
+      <div class="logo">🏫</div>
+      <div>
+        <h1>高一微課程課表通</h1>
+        <p class="sub">115 學年度第一學期 · 楊梅高中 · 任課教師暨上課時間一覽</p>
+      </div>
+      <div class="spacer"></div>
+      <button class="theme-btn" id="themeBtn" aria-label="切換深淺色">🌗 <span id="themeLbl">深色</span></button>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="section-title"><span class="ic">⏰</span>接下來的課程 <small id="upSub"></small></div>
+  <div class="upcoming" id="upcoming"></div>
+
+  <div class="panel">
+    <div class="searchbar">
+      <label class="search">
+        <span class="mag">🔍</span>
+        <input id="q" type="search" placeholder="搜尋教師、班級、日期、群組…" autocomplete="off" aria-label="搜尋">
+        <button class="clearx" id="clearx" aria-label="清除搜尋">✕</button>
+      </label>
+      <button class="sound-btn" id="soundBtn" aria-pressed="true">🔊 <span id="soundLbl">音效開</span></button>
+    </div>
+    <div class="filters">
+      <div class="filt-row">
+        <div class="filt-label">👩‍🏫 教師</div>
+        <div class="chips" id="teacherChips"></div>
+      </div>
+      <div class="filt-row">
+        <div class="filt-label">🎒 班級</div>
+        <div class="chips" id="classChips"></div>
+      </div>
+      <div class="filt-row">
+        <div class="filt-label">📚 群組</div>
+        <div class="chips" id="groupChips"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="groupby" role="tablist" aria-label="分組方式">
+      <button class="gbtn on" data-gb="date" role="tab">📅 依日期</button>
+      <button class="gbtn" data-gb="teacher" role="tab">👩‍🏫 依教師</button>
+      <button class="gbtn" data-gb="class" role="tab">🎒 依班級</button>
+    </div>
+    <div class="countpill">共 <b id="count" class="num">0</b> 堂課</div>
+  </div>
+
+  <div id="results"></div>
+
+  <footer>
+    共 8 位任課教師 · 4 個微課程群組 · 15 個班級（含體育一甲）<br>
+    課程時間以學校公告為準；本頁為互動檢索工具，方便師生查詢。
+  </footer>
+</div>
+
+<script>
+/* ============ 資料 ============ */
+// 教師色票對應
+const TEACHERS = [
+  {name:"施文賢", v:"--t-shi"},
+  {name:"江明慧", v:"--t-jiang"},
+  {name:"葉叢瑜", v:"--t-yeh"},
+  {name:"楊瑞雲", v:"--t-yang"},
+  {name:"賴奕成", v:"--t-laiy"},
+  {name:"何友友", v:"--t-ho"},
+  {name:"陳佩萱", v:"--t-chen"},
+  {name:"賴俊帆", v:"--t-laij"},
+];
+const TVAR = {}; TEACHERS.forEach(t=>TVAR[t.name]=t.v);
+
+// 各群組原始資料（日期 M/D、班級、對應教師陣列）
+const GROUPS = [
+  {
+    id:"g1", name:"第1群", weekday:1, period:1,
+    dates:["9/7","9/14","9/21","10/5","10/12","10/19","11/2","11/9","11/16","11/23","11/30","12/7","12/14","12/21","12/28","1/4","1/11"],
+    classes:{
+      "一年1班":["何友友","何友友","何友友","江明慧","江明慧","江明慧","施文賢","施文賢","施文賢","楊瑞雲","楊瑞雲","賴奕成","賴奕成","葉叢瑜","葉叢瑜","陳佩萱","陳佩萱"],
+      "一年2班":["賴奕成","賴奕成","賴奕成","陳佩萱","陳佩萱","陳佩萱","楊瑞雲","楊瑞雲","楊瑞雲","施文賢","施文賢","葉叢瑜","葉叢瑜","江明慧","江明慧","何友友","何友友"],
+      "一年6班":["施文賢","施文賢","施文賢","葉叢瑜","葉叢瑜","葉叢瑜","賴奕成","賴奕成","賴奕成","江明慧","江明慧","何友友","何友友","陳佩萱","陳佩萱","楊瑞雲","楊瑞雲"],
+      "一年7班":["江明慧","江明慧","江明慧","何友友","何友友","何友友","葉叢瑜","葉叢瑜","葉叢瑜","賴奕成","賴奕成","陳佩萱","陳佩萱","楊瑞雲","楊瑞雲","施文賢","施文賢"],
+      "一年8班":["葉叢瑜","葉叢瑜","葉叢瑜","施文賢","施文賢","施文賢","江明慧","江明慧","江明慧","陳佩萱","陳佩萱","楊瑞雲","楊瑞雲","何友友","何友友","賴奕成","賴奕成"],
+      "一年10班":["楊瑞雲","楊瑞雲","楊瑞雲","賴奕成","賴奕成","賴奕成","陳佩萱","陳佩萱","陳佩萱","何友友","何友友","江明慧","江明慧","施文賢","施文賢","葉叢瑜","葉叢瑜"],
+      "一年12班":["陳佩萱","陳佩萱","陳佩萱","楊瑞雲","楊瑞雲","楊瑞雲","何友友","何友友","何友友","葉叢瑜","葉叢瑜","施文賢","施文賢","賴奕成","賴奕成","江明慧","江明慧"],
+    }
+  },
+  {
+    id:"g2", name:"第2群", weekday:2, period:2,
+    dates:["9/1","9/8","9/15","9/22","9/29","10/6","10/20","10/27","11/3","11/10","11/17","11/24","12/1","12/8","12/15","12/22","12/29","1/5","1/12"],
+    classes:{
+      "一年3班":["施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜","陳佩萱","陳佩萱","陳佩萱","何友友","何友友","何友友","賴俊帆","賴俊帆","賴俊帆","賴奕成","賴奕成","賴奕成"],
+      "一年4班":["賴奕成","賴奕成","賴奕成","施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜","陳佩萱","陳佩萱","陳佩萱","何友友","何友友","何友友","賴俊帆","賴俊帆","賴俊帆"],
+      "一年5班":["賴俊帆","賴俊帆","賴俊帆","賴奕成","賴奕成","賴奕成","施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜","陳佩萱","陳佩萱","陳佩萱","何友友","何友友","何友友"],
+      "一年9班":["何友友","何友友","何友友","賴俊帆","賴俊帆","賴俊帆","賴奕成","賴奕成","賴奕成","施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜","陳佩萱","陳佩萱","陳佩萱"],
+      "一年11班":["陳佩萱","陳佩萱","陳佩萱","何友友","何友友","何友友","賴俊帆","賴俊帆","賴俊帆","賴奕成","賴奕成","賴奕成","施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜"],
+      "一年13班":["江明慧","江明慧","葉叢瑜","葉叢瑜","陳佩萱","陳佩萱","陳佩萱","何友友","何友友","何友友","賴俊帆","賴俊帆","賴俊帆","賴奕成","賴奕成","賴奕成","施文賢","施文賢","施文賢"],
+    }
+  },
+  {
+    id:"g3", name:"第3群", weekday:1, period:6,
+    dates:["8/31","9/7","9/14","9/21","10/5","10/12","10/19","11/2","11/9","11/16","11/23","11/30","12/7","12/14","12/21","12/28","1/4","1/11"],
+    classes:{
+      "體育一甲":["施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜","楊瑞雲","楊瑞雲","賴奕成","賴奕成","賴奕成","何友友","何友友","何友友","陳佩萱","陳佩萱","陳佩萱"],
+    }
+  },
+  {
+    id:"g4", name:"第4群", weekday:4, period:5,
+    dates:["9/3","9/10","9/17","9/24","10/1","10/8","10/15","10/22","10/29","11/5","11/12","11/19","11/26","12/10","12/17","12/24","12/31","1/7","1/14"],
+    classes:{
+      "體育一甲":["施文賢","施文賢","施文賢","江明慧","江明慧","葉叢瑜","葉叢瑜","賴俊帆","賴俊帆","賴俊帆","賴奕成","賴奕成","賴奕成","何友友","何友友","何友友","陳佩萱","陳佩萱","陳佩萱"],
+    }
+  },
+];
+
+const WK = {1:"星期一",2:"星期二",3:"星期三",4:"星期四",5:"星期五"};
+
+// 展開為單筆記錄
+const RECORDS = [];
+GROUPS.forEach(g=>{
+  Object.entries(g.classes).forEach(([cls, arr])=>{
+    g.dates.forEach((d,i)=>{
+      const [m,day] = d.split("/").map(Number);
+      const year = m>=8 ? 2026 : 2027;
+      RECORDS.push({
+        group:g.name, groupId:g.id, weekday:g.weekday, period:g.period,
+        cls, teacher:arr[i], m, day, year,
+        dateObj:new Date(year, m-1, day),
+        dateLabel:`${m}/${day}`,
+        key:`${g.id}-${cls}-${i}`
+      });
+    });
+  });
+});
+RECORDS.sort((a,b)=>a.dateObj-b.dateObj);
+
+// 班級清單（依自然順序）
+const CLASS_ORDER = ["一年1班","一年2班","一年3班","一年4班","一年5班","一年6班","一年7班","一年8班","一年9班","一年10班","一年11班","一年12班","一年13班","體育一甲"];
+const ALL_CLASSES = CLASS_ORDER.filter(c=>RECORDS.some(r=>r.cls===c));
+
+/* ============ 音效 ============ */
+let audioCtx=null, soundOn=true;
+try{const s=localStorage.getItem("mc_sound"); if(s==="off") soundOn=false;}catch(e){}
+function ensureAudio(){ if(!audioCtx){ try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){} } }
+function beep(freq=660, dur=0.09, type="sine", vol=0.14){
+  if(!soundOn||!audioCtx) return;
+  const o=audioCtx.createOscillator(), gN=audioCtx.createGain();
+  o.type=type; o.frequency.value=freq;
+  gN.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+  gN.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime+0.012);
+  gN.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime+dur);
+  o.connect(gN).connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime+dur+0.02);
+}
+function chord(freqs, dur=0.16){ if(!soundOn||!audioCtx) return; freqs.forEach((f,i)=>setTimeout(()=>beep(f,dur,"triangle",0.11), i*55)); }
+const sfx={
+  tap:()=>beep(600,0.07,"sine",0.12),
+  on:()=>beep(880,0.09,"triangle",0.13),
+  off:()=>beep(360,0.09,"sine",0.11),
+  swap:()=>{beep(520,0.06,"square",0.07); setTimeout(()=>beep(780,0.08,"square",0.07),60);},
+  reset:()=>chord([523,659,784]),
+  type:()=>beep(1200,0.03,"sine",0.05),
+};
+window.addEventListener("pointerdown", ensureAudio, {once:false});
+
+/* ============ 狀態 ============ */
+const state = { q:"", teachers:new Set(), classes:new Set(), groups:new Set(), gb:"date" };
+
+/* ============ 建立篩選晶片 ============ */
+const teacherChips=document.getElementById("teacherChips");
+TEACHERS.forEach(t=>{
+  const b=document.createElement("button");
+  b.className="chip"; b.style.setProperty("--tc",`var(${t.v})`);
+  b.innerHTML=`<span class="cdot"></span>${t.name}`;
+  b.onclick=()=>{ toggleSet(state.teachers,t.name,b); };
+  teacherChips.appendChild(b);
+});
+const classChips=document.getElementById("classChips");
+ALL_CLASSES.forEach(c=>{
+  const b=document.createElement("button");
+  b.className="chip plain";
+  b.textContent=c;
+  b.onclick=()=>{ toggleSet(state.classes,c,b); };
+  classChips.appendChild(b);
+});
+const groupChips=document.getElementById("groupChips");
+GROUPS.forEach(g=>{
+  const b=document.createElement("button");
+  b.className="chip plain";
+  b.textContent=`${g.name}（${WK[g.weekday]}第${g.period}節）`;
+  b.onclick=()=>{ toggleSet(state.groups,g.name,b); };
+  groupChips.appendChild(b);
+});
+function toggleSet(set,val,btn){
+  if(set.has(val)){ set.delete(val); btn.classList.remove("on"); sfx.off(); }
+  else { set.add(val); btn.classList.add("on"); btn.classList.add("pop"); setTimeout(()=>btn.classList.remove("pop"),240); sfx.on(); }
+  render();
+}
+
+/* ============ 搜尋 ============ */
+const qInput=document.getElementById("q"), clearx=document.getElementById("clearx");
+qInput.addEventListener("input", ()=>{
+  state.q=qInput.value.trim();
+  clearx.classList.toggle("show", state.q.length>0);
+  if(state.q.length && state.q.length%2===0) sfx.type();
+  render();
+});
+clearx.onclick=()=>{ qInput.value=""; state.q=""; clearx.classList.remove("show"); qInput.focus(); sfx.tap(); render(); };
+
+/* ============ 分組切換 ============ */
+document.querySelectorAll(".gbtn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".gbtn").forEach(b=>b.classList.remove("on"));
+    btn.classList.add("on"); state.gb=btn.dataset.gb; sfx.swap(); render();
+  };
+});
+
+/* ============ 音效 / 主題 ============ */
+const soundBtn=document.getElementById("soundBtn"), soundLbl=document.getElementById("soundLbl");
+function syncSound(){ soundLbl.textContent=soundOn?"音效開":"音效關"; soundBtn.firstChild.textContent=soundOn?"🔊 ":"🔇 "; soundBtn.setAttribute("aria-pressed",soundOn); }
+syncSound();
+soundBtn.onclick=()=>{ ensureAudio(); soundOn=!soundOn; try{localStorage.setItem("mc_sound",soundOn?"on":"off");}catch(e){} syncSound(); if(soundOn) sfx.on(); };
+
+const themeBtn=document.getElementById("themeBtn"), themeLbl=document.getElementById("themeLbl");
+function currentDark(){ const ex=document.documentElement.getAttribute("data-theme"); if(ex) return ex==="dark"; return window.matchMedia("(prefers-color-scheme:dark)").matches; }
+function syncThemeLbl(){ themeLbl.textContent=currentDark()?"淺色":"深色"; }
+syncThemeLbl();
+themeBtn.onclick=()=>{ const dark=currentDark(); document.documentElement.setAttribute("data-theme", dark?"light":"dark"); syncThemeLbl(); sfx.tap(); };
+
+/* ============ 篩選邏輯 ============ */
+function filtered(){
+  const q=state.q.toLowerCase();
+  return RECORDS.filter(r=>{
+    if(state.teachers.size && !state.teachers.has(r.teacher)) return false;
+    if(state.classes.size && !state.classes.has(r.cls)) return false;
+    if(state.groups.size && !state.groups.has(r.group)) return false;
+    if(q){
+      const hay=`${r.teacher} ${r.cls} ${r.group} ${r.dateLabel} ${WK[r.weekday]} 第${r.period}節 ${r.m}月${r.day}日`.toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+/* ============ 卡片 ============ */
+function cardHTML(r, isToday){
+  const tv=`var(${TVAR[r.teacher]})`;
+  return `<div class="card${isToday?' today':''}" style="--tc:${tv}">
+    ${isToday?'<span class="todaytag">今天</span>':''}
+    <div class="row1"><span class="date num">${r.dateLabel}</span><span class="wk">${WK[r.weekday]}</span></div>
+    <div class="cls">${r.cls}</div>
+    <div class="per">${r.group} · 第${r.period}節</div>
+    <button class="tch" data-t="${r.teacher}"><span class="dot"></span>${r.teacher}</button>
+  </div>`;
+}
+function todayKey(){ const n=new Date(); return `${n.getFullYear()}-${n.getMonth()}-${n.getDate()}`; }
+function recKey(r){ return `${r.year}-${r.m-1}-${r.day}`; }
+
+/* ============ 主渲染 ============ */
+const results=document.getElementById("results"), countEl=document.getElementById("count");
+function render(){
+  const data=filtered();
+  countEl.textContent=data.length;
+  const tKey=todayKey();
+
+  if(data.length===0){
+    results.innerHTML=`<div class="empty"><div class="big">🔍</div><h3>找不到符合的課程</h3><p>試著調整搜尋關鍵字或清除篩選條件。</p><button id="resetBtn">清除全部篩選</button></div>`;
+    document.getElementById("resetBtn").onclick=resetAll;
+    return;
+  }
+
+  let groups=[];
+  if(state.gb==="date"){
+    const map=new Map();
+    data.forEach(r=>{ const k=`${r.year}-${String(r.m).padStart(2,'0')}`; if(!map.has(k)) map.set(k,[]); map.get(k).push(r); });
+    [...map.keys()].sort().forEach(k=>{
+      const [y,m]=k.split("-"); const rs=map.get(k);
+      groups.push({ tc:"var(--accent)", icon:`${Number(m)}月`, title:`${y} 年 ${Number(m)} 月`, meta:`${rs.length} 堂課`, records:rs.sort((a,b)=>a.dateObj-b.dateObj), small:true });
+    });
+  } else if(state.gb==="teacher"){
+    TEACHERS.forEach(t=>{
+      const rs=data.filter(r=>r.teacher===t.name).sort((a,b)=>a.dateObj-b.dateObj);
+      if(rs.length) groups.push({ tc:`var(${t.v})`, icon:t.name[0], title:t.name+" 老師", meta:`${new Set(rs.map(r=>r.cls)).size} 個班級`, records:rs });
+    });
+  } else {
+    CLASS_ORDER.forEach(c=>{
+      const rs=data.filter(r=>r.cls===c).sort((a,b)=>a.dateObj-b.dateObj);
+      if(rs.length){ const g=rs[0]; groups.push({ tc:"var(--t-laiy)", icon:"🎒", title:c, meta:`${new Set(rs.map(r=>r.teacher)).size} 位老師`, records:rs }); }
+    });
+  }
+
+  results.innerHTML=groups.map(g=>{
+    const cards=g.records.map(r=>cardHTML(r, recKey(r)===tKey)).join("");
+    return `<section class="group">
+      <div class="grp-head" style="--tc:${g.tc}">
+        <div class="gh-icon num">${g.icon}</div>
+        <h3>${g.title}</h3>
+        <span class="gh-meta">${g.meta}</span>
+        <span class="gh-count num">${g.records.length} 堂</span>
+      </div>
+      <div class="grid">${cards}</div>
+    </section>`;
+  }).join("");
+
+  // 卡片上點教師名 → 篩選
+  results.querySelectorAll(".tch").forEach(b=>{
+    b.onclick=()=>{
+      const name=b.dataset.t;
+      const chip=[...teacherChips.children].find(c=>c.textContent.trim()===name);
+      if(chip && !state.teachers.has(name)){ toggleSet(state.teachers,name,chip); window.scrollTo({top:0,behavior:'smooth'}); }
+      else sfx.tap();
+    };
+  });
+}
+
+function resetAll(){
+  state.q=""; qInput.value=""; clearx.classList.remove("show");
+  state.teachers.clear(); state.classes.clear(); state.groups.clear();
+  document.querySelectorAll(".chip.on").forEach(c=>c.classList.remove("on"));
+  sfx.reset(); render();
+}
+
+/* ============ 統計 & 接下來課程 ============ */
+function buildStats(){
+  const stats=[
+    {n:RECORDS.length, l:"總堂數"},
+    {n:TEACHERS.length, l:"任課教師"},
+    {n:ALL_CLASSES.length, l:"班級數"},
+    {n:GROUPS.length, l:"課程群組"},
+  ];
+  document.getElementById("stats").innerHTML=stats.map(s=>`<div class="stat"><b class="num">${s.n}</b><span>${s.l}</span></div>`).join("");
+}
+function buildUpcoming(){
+  const now=new Date(); now.setHours(0,0,0,0);
+  const up=RECORDS.filter(r=>r.dateObj>=now).sort((a,b)=>a.dateObj-b.dateObj).slice(0,6);
+  const box=document.getElementById("upcoming"), sub=document.getElementById("upSub");
+  if(up.length===0){
+    sub.textContent="";
+    box.innerHTML=`<div class="up-card" style="--tc:var(--accent)"><div class="cd">本學期課程已全部結束 🎉</div><div class="tt">感謝一學期的努力</div></div>`;
+    return;
+  }
+  sub.textContent=`（以今天 ${now.getMonth()+1}/${now.getDate()} 起算）`;
+  box.innerHTML=up.map(r=>{
+    const tv=`var(${TVAR[r.teacher]})`;
+    const diff=Math.round((r.dateObj-now)/86400000);
+    const away = diff===0?"就在今天！":(diff===1?"明天":`還有 ${diff} 天`);
+    return `<div class="up-card" style="--tc:${tv}">
+      <span class="cd-badge">${WK[r.weekday]}·第${r.period}節</span>
+      <div class="when"><span class="dd num">${r.dateLabel}</span><span class="wk">${WK[r.weekday]}</span></div>
+      <div class="days-away">${away}</div>
+      <div class="cd">${r.cls}</div>
+      <div class="tt"><span class="dot"></span>${r.teacher}</div>
+    </div>`;
+  }).join("");
+}
+
+buildStats(); buildUpcoming(); render();
+</script>
